@@ -1,5 +1,3 @@
-<img width="1024" height="702" alt="NetworkWalks Week 4 banner" src="https://github.com/user-attachments/assets/e97258db-f94e-43ee-9730-b475a4a3408c" />
-
 # NetworkWalks Cybersecurity Internship — Week 4
 ## Penetration Testing Project: Mediroza General Hospital
 
