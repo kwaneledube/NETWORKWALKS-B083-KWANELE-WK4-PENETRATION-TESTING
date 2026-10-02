@@ -42,7 +42,7 @@
 
 **WHOIS Lookup** — identified domain registration, registrar (NameCheap), name servers (DNS1/DNS2.NAMECHEAPHOSTING.COM), creation date (2026-08-14), and expiry date (2027-08-14).
 
-![whois](M1-Initial-Access/01_whois.png)
+![whois](M1-Initial-Access/<img width="1024" height="702" alt="01_whois" src="https://github.com/user-attachments/assets/03077bb7-cf6e-40cb-8c5e-28ac7d2de73d" />.png)
 
 ---
 
