@@ -1,7 +1,7 @@
 # NetworkWalks Cybersecurity Internship — Week 4
 ## Penetration Testing Project: Mediroza General Hospital
 
-**Batch:** B083 | **Intern:** Kwanele Dube (MrHim) | **Intern ID:** NW-83-CFM  
+**Batch:** B083 | **Intern:** Kwanele Dube | **Intern ID:** NW-83-CFM  
 **Target:** https://medirozahospital.com  
 **Engagement Type:** Black-box Penetration Test | **Duration:** 5 Days  
 **Authorization:** Written authorization granted by NetworkWalks on behalf of the client
