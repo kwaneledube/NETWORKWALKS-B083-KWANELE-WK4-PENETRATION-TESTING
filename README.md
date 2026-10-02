@@ -312,6 +312,16 @@ A full professional penetration testing report was written covering all 8 findin
 
 ---
 
+## 📱 LinkedIn
+
+Share your thoughts on this penetration testing project and cybersecurity insights:
+
+**LinkedIn Post:** *(Add your LinkedIn post link here)*
+
+Discuss this work on LinkedIn and connect with the cybersecurity community. Your feedback and engagement are welcome!
+
+---
+
 ## ⚠️ Disclaimer
 
 This assessment was performed under explicit written authorization as part of a structured training engagement (NetworkWalks Cybersecurity Internship, Batch B083). No techniques described here were used outside the bounds of the agreed scope and controlled environment.
