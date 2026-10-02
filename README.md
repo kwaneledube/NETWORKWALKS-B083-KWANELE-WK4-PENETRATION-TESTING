@@ -1,3 +1,4 @@
+<img width="1024" height="702" alt="02_dnsrecon" src="https://github.com/user-attachments/assets/e97258db-f94e-43ee-9730-b475a4a3408c" />
 # NetworkWalks Cybersecurity Internship — Week 4
 ## Penetration Testing Project: Mediroza General Hospital
 
@@ -48,9 +49,17 @@
 
 **DNS Enumeration** — `dnsrecon` revealed SOA/NS records pointing to Namecheap hosting, MX records hosted by jellyfish.systems, A record resolving to 199.188.201.16, SPF/DMARC TXT records, and multiple SRV records confirming cPanel mail infrastructure.
 
-![dnsrecon](M1-Initial-Access/02_dnsrecon.png)
+![dnsrecon](M1-Initial-Access/02_<img width="1024" height="702" alt="02_dnsrecon" src="https://github.com/user-attachments/assets/31454a1d-b043-4151-880d-e136daecbe69" />
+dnsrecon.png)
+<img width="1024" height="702" alt="03_http_headers" src="https://github.com/user-attachments/assets/2b32d7a8-bba3-4fba-be87-8741160d99de" />
 
 ---
+<img width="1024" height="702" alt="08_gobuster_run" src="https://github.com/user-attachments/assets/d52ea076-f58e-4fa2-b789-c4ead5652c6c" />
+<img width="1024" height="768" alt="07_robots_sitemap" src="https://github.com/user-attachments/assets/3bec2b40-d524-46dd-b285-4accf98b4173" />
+<img width="1024" height="640" alt="06_view_source_doctors" src="https://github.com/user-attachments/assets/87fd7c8a-b0fb-4fc6-bdf7-10b1b8f9f512" />
+<img width="1024" height="640" alt="05_site_homepage" src="https://github.com/user-attachments/assets/bdbb746e-3279-4d42-bef9-bf30667fea91" />
+<img width="512" height="320" alt="04_staff_login_headers" src="https://github.com/user-attachments/assets/00f49f0a-3db2-4c21-8988-d00246246bad" />
+<img width="1024" height="702" alt="03_http_headers" src="https://github.com/user-attachments/assets/db4ad2c4-2dcf-4033-ad6d-4c7c1e2ec3d6" />
 
 ### Phase 2: Active Reconnaissance
 
@@ -96,11 +105,26 @@ This was investigated as a possible FUEL CMS rebrand (CVE-2018-16763 RCE, CVE-20
 
 ---
 
-**Enumeration Complete — Key Finding: `/old/` directory** — Gobuster completed confirming `/old/` (Status 301) alongside standard cPanel system aliases. Direct enumeration of `/old/` revealed a publicly accessible database backup file.
+**Enumerat<img width="1024" height="768" alt="wordlist gobuster" src="https://github.com/user-attachments/assets/c49cf51e-d359-4f6e-a493-5000301399fc" />
+<img width="1024" height="702" alt="Finished file enumeration" src="https://github.com/user-attachments/assets/1112927e-c550-42cc-b15e-cf522ad00857" />
+<img width="1024" height="768" alt="OpenResty WAF discovery" src="https://github.com/user-attachments/assets/f87c5e59-6363-4d1e-967e-e2099398be75" />
+ion Complete — Key Finding: `/old/` directory** — Gobuster completed confirming `/old/` (Status 301) alongside standard cPanel system aliases. Direct enumeration of `/old/` revealed a publicly accessible database backup file.
 
 ![finished_enumeration](M1-Initial-Access/Finished_file_enumeration.png)
 
 ---
+<img width="1024" height="768" alt="12   13_staff_and_shareholders_data" src="https://github.com/user-attachments/assets/8270e71d-7901-4daa-9356-6c8dfe4be96a" />
+<img width="410" height="256" alt="11_db_tables" src="https://github.com/user-attachments/assets/b072f651-c295-4ce1-af08-58a6275145b1" />
+<img width="683" height="427" alt="10_sql_downloaded" src="https://github.com/user-attachments/assets/541a4e16-ce36-44da-9fbe-f91d5a2da504" />
+<img width="1024" height="640" alt="22_pdfs_opened" src="https://github.com/user-attachments/assets/ebc2e48b-7e1f-40c8-9cbc-098ff4fefdbb" />
+<img width="1024" height="768" alt="21_pdfcrack_results" src="https://github.com/user-attachments/assets/27629115-8d09-4a45-b835-1a016bcd0fed" />
+<img width="1024" height="640" alt="19   20_pdf_download_reports_file_info" src="https://github.com/user-attachments/assets/5fa69c6c-beaa-4922-a8c9-7c496657cead" />
+<img width="1024" height="640" alt="18_portal_3_reports" src="https://github.com/user-attachments/assets/d612ed2c-b217-4814-9d65-856af27cec2a" />
+<img width="1024" height="640" alt="17_auth_bypass" src="https://github.com/user-attachments/assets/fe164af0-6139-41fc-85c0-522c33cd4190" />
+<img width="1024" height="640" alt="16_username_enumeration" src="https://github.com/user-attachments/assets/25253145-d4f1-4652-9f63-44df4b7baac8" />
+<img width="1024" height="640" alt="15_patient_sqli_error" src="https://github.com/user-attachments/assets/6964d407-1551-4cf5-8750-78bbcee280ba" />
+<img width="1024" height="768" alt="14_sqlmap_staff" src="https://github.com/user-attachments/assets/fe8968f9-d2ad-455a-9fa5-e0c2f951f7ee" />
+<img width="683" height="427" alt="09_old_directory_listing" src="https://github.com/user-attachments/assets/f9e703d9-65fb-4a9e-bc93-f63b35a31b6a" />
 
 **WAF/Anti-Bot Detection Note** — During enumeration, certain paths (`/uploads/`, `/lab-reports/`) returned misleading responses via curl due to a JavaScript-based bot-detection layer. Browser verification confirmed these were genuine 404s. This WAF behavior affected automated tooling partway through the engagement — documented as a defensive finding (F5 in the report).
 
