@@ -1,12 +1,12 @@
 # NetworkWalks Cybersecurity Internship — Week 4
 ## Penetration Testing Project: Mediroza General Hospital
 
-**Batch:** B083 | **Intern:** Kwanele Dube | **Intern ID:** NW-83-CFM  
+**Batch:** B083 | **Intern:** Kwanele Dube (MrHim) | **Intern ID:** NW-83-CFM  
 **Target:** https://medirozahospital.com  
 **Engagement Type:** Black-box Penetration Test | **Duration:** 5 Days  
 **Authorization:** Written authorization granted by NetworkWalks on behalf of the client
 
-> ⚠️ This project was conducted in a controlled, authorized environment for educational purposes only. Techniques demonstrated here were performed with explicit written permission and must never be reused outside a legitimate authorized security assessment.
+> ⚠️ This project was conducted in a controlled, authorized environment for educational purposes only. Techniques demonstrated here were performed with explicit written permission and must never be used against systems without explicit written authorization.
 
 ---
 
@@ -48,7 +48,7 @@
 
 ---
 
-**DNS Enumeration** — `dnsrecon` revealed SOA/NS records pointing to Namecheap hosting, MX records hosted by jellyfish.systems, A record resolving to 199.188.201.16, SPF/DMARC TXT records, and multiple service records.
+**DNS Enumeration** — `dnsrecon` revealed SOA/NS records pointing to Namecheap hosting, MX records hosted by jellyfish.systems, A record resolving to 199.188.201.16, SPF/DMARC TXT records, and multi-level DNS hierarchy.
 
 ![DNS Recon](https://github.com/user-attachments/assets/31454a1d-b043-4151-880d-e136daecbe69)
 
@@ -58,7 +58,7 @@
 
 ### Phase 2: Active Reconnaissance
 
-**HTTP Header Fingerprinting** — `curl -I` on the root domain confirmed the server was running **LiteSpeed**; PHP was not exposed at root level. The staff login page leaked **PHP/8.2.33** via `x-powered-by`.
+**HTTP Header Fingerprinting** — `curl -I` on the root domain confirmed the server was running **LiteSpeed**; PHP was not exposed at root level. The staff login page leaked **PHP/8.2.33** via `x-powered-by` header.
 
 ![HTTP Headers](https://github.com/user-attachments/assets/db4ad2c4-2dcf-4033-ad6d-4c7c1e2ec3d6)
 
@@ -98,7 +98,7 @@ This was investigated as a possible FUEL CMS rebrand (CVE-2018-16763 RCE, CVE-20
 
 ---
 
-**Directory Enumeration (gobuster) — Pass 1** — `dirb/common.txt` with multiple extensions. Key finding: `/old/` returned Status 301. It also revealed `robots.txt`, `sitemap.xml`, and `/staff/` — no hidden admin panels were immediately exposed.
+**Directory Enumeration (gobuster) — Pass 1** — `dirb/common.txt` with multiple extensions. Key finding: `/old/` returned Status 301. It also revealed `robots.txt`, `sitemap.xml`, and `/staff/` directories.
 
 ![Gobuster Run](https://github.com/user-attachments/assets/d52ea076-f58e-4fa2-b789-c4ead5652c6c)
 
@@ -114,7 +114,7 @@ This was investigated as a possible FUEL CMS rebrand (CVE-2018-16763 RCE, CVE-20
 
 ---
 
-**Enumeration Complete — Key Finding: `/old/` directory** — Gobuster completed confirming `/old/` (Status 301) alongside standard cPanel system aliases. Direct enumeration of `/old/` revealed a publicly accessible SQL backup file.
+**Enumeration Complete — Key Finding: `/old/` directory** — Gobuster completed confirming `/old/` (Status 301) alongside standard cPanel system aliases. Direct enumeration of `/old/` revealed a publicly accessible directory with sensitive files.
 
 ![Finished Enumeration](https://github.com/user-attachments/assets/1112927e-c550-42cc-b15e-cf522ad00857)
 
@@ -122,7 +122,7 @@ This was investigated as a possible FUEL CMS rebrand (CVE-2018-16763 RCE, CVE-20
 
 ---
 
-**WAF/Anti-Bot Detection Note** — During enumeration, certain paths (`/uploads/`, `/lab-reports/`) returned misleading responses via curl due to a JavaScript-based bot-detection layer. Browser verification was used to confirm the true exposure.
+**WAF/Anti-Bot Detection Note** — During enumeration, certain paths (`/uploads/`, `/lab-reports/`) returned misleading responses via curl due to a JavaScript-based bot-detection layer. Browser verification confirmed the paths were blocked by OpenResty WAF.
 
 ![OpenResty WAF Discovery](https://github.com/user-attachments/assets/f87c5e59-6363-4d1e-967e-e2099398be75)
 
@@ -144,7 +144,7 @@ This was investigated as a possible FUEL CMS rebrand (CVE-2018-16763 RCE, CVE-20
 
 ### Phase 4: Vulnerability Identification
 
-**Staff Login — Tested, No SQLi Found** — Manual single-quote testing, boolean logic probes, and `sqlmap` with direct POST data and `--random-agent` all returned the same result: `all tested parameters appear to be not injectable`.
+**Staff Login — Tested, No SQLi Found** — Manual single-quote testing, boolean logic probes, and `sqlmap` with direct POST data and `--random-agent` all returned the same result: `all tested parameters appear to be not vulnerable`.
 
 ![SQLMap Staff Check](https://github.com/user-attachments/assets/fe8968f9-d2ad-455a-9fa5-e0c2f951f7ee)
 
@@ -156,7 +156,7 @@ This was investigated as a possible FUEL CMS rebrand (CVE-2018-16763 RCE, CVE-20
 
 > `Warning: mysqli_query(): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''' at line 1`
 
-The patient portal also returns **different error messages** depending on username existence — "Username not found" vs "Incorrect password" — confirming **username enumeration** and the existence of injectable logic.
+The patient portal also returns **different error messages** depending on username existence — "Username not found" vs "Incorrect password" — confirming **username enumeration** and the existence of an SQLi vulnerability.
 
 ![Patient SQLi Error](https://github.com/user-attachments/assets/6964d407-1551-4cf5-8750-78bbcee280ba)
 
@@ -236,7 +236,7 @@ All 3 PDFs were downloaded via an authenticated `curl` session using a cookie ja
 
 ## M3 — Critical Data Exposure
 
-The database backup discovered in M1 (`/old/mediroza_db_backup_2019.sql`) was downloaded and analyzed. The first download attempt was blocked by the WAF (returned an HTML challenge page); a second attempt succeeded, exposing the full backup archive.
+The database backup discovered in M1 (`/old/mediroza_db_backup_2019.sql`) was downloaded and analyzed. The first download attempt was blocked by the WAF (returned an HTML challenge page); a second attempt using a browser User-Agent string succeeded.
 
 ![SQL Download](https://github.com/user-attachments/assets/541a4e16-ce36-44da-9fbe-f91d5a2da504)
 
@@ -261,7 +261,7 @@ CREATE TABLE `shareholders`;
 
 The `staff` table contained 30 employee records with columns: `id`, `full_name`, `job_title`, `department`, `email`, `phone`, **`national_id`**, **`monthly_salary_zar`**, and `date_joined`.
 
-> ⚠️ **Additional critical finding beyond the milestone scope:** the `national_id` column exposes South African national identity numbers for all 30 staff members in plaintext — a serious POPIA/privacy concern and a severe data exposure.
+> ⚠️ **Additional critical finding beyond the milestone scope:** the `national_id` column exposes South African national identity numbers for all 30 staff members in plaintext — a serious POPIA violation requiring immediate remediation.
 
 ### Shareholder Details
 
@@ -283,7 +283,7 @@ Top shareholders included Dr. Rajesh Naidoo (18%), Cedar Health Holdings (Pty) L
 
 A full professional penetration testing report was written covering all 8 findings with severity ratings, proof of exploitation, and remediation recommendations.
 
-📄 **[Download the full report](M4-Report/Mediroza_Pentest_Report_WK4.docx)**
+📄 **[Download the full report (PDF)](Mediroza_Pentest_Report_WK4.pdf)**
 
 ### Findings Summary
 
@@ -303,9 +303,9 @@ A full professional penetration testing report was written covering all 8 findin
 ## 🔑 Key Lessons
 
 - **Tool output is never ground truth** — Hydra returned 16 false-positive "valid passwords" because it attacked HTTP port 80 instead of HTTPS port 443. Always verify surprising results manually before acting on them.
-- **The WAF is not the target** — Sustained automated scanning triggered bot-detection mid-engagement, blocking curl/sqlmap/gobuster for a period. Falling back to browser-based manual testing bypassed the anti-bot challenge and preserved the assessment.
+- **The WAF is not the target** — Sustained automated scanning triggered bot-detection mid-engagement, blocking curl/sqlmap/gobuster for a period. Falling back to browser-based manual testing bypassed the defense.
 - **Recon pays off** — The `/old/` directory was found through systematic enumeration. The database backup inside it solved M3 and provided patient names later used to verify M1.
-- **Different forms, different code** — Staff login and patient login were built independently. Staff login had no SQLi. Patient login did. Never assume two similar-looking forms share the same security characteristics.
+- **Different forms, different code** — Staff login and patient login were built independently. Staff login had no SQLi. Patient login did. Never assume two similar-looking forms share the same security posture.
 - **Adapt when tools fail** — john and hashcat both hit environment issues. pdfcrack solved the same problem in minutes. Knowing alternatives matters as much as knowing primary tools.
 
 ---
@@ -314,7 +314,7 @@ A full professional penetration testing report was written covering all 8 findin
 
 Share your thoughts on this penetration testing project and cybersecurity insights:
 
-**LinkedIn Post:** *(Add your LinkedIn post link here)*
+**LinkedIn Post:** https://www.linkedin.com/feed/update/urn:li:activity:7512054527412527104/
 
 Discuss this work on LinkedIn and connect with the cybersecurity community. Your feedback and engagement are welcome!
 
@@ -322,4 +322,4 @@ Discuss this work on LinkedIn and connect with the cybersecurity community. Your
 
 ## ⚠️ Disclaimer
 
-This assessment was performed under explicit written authorization as part of a structured training engagement (NetworkWalks Cybersecurity Internship, Batch B083). No techniques described here were used outside the bounds of the agreed scope and controlled environment.
+This assessment was performed under explicit written authorization as part of a structured training engagement (NetworkWalks Cybersecurity Internship, Batch B083). No techniques described here were used against systems without explicit authorization. This project is shared for educational purposes only to demonstrate cybersecurity assessment methodologies and defensive security awareness.
